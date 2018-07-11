@@ -229,7 +229,7 @@ td {
 
 .title-slide:after {
     content: '';
-    background: url("../assets/logo_ulg.png") no-repeat;
+    /*background: url("../assets/logo_ulg.png") no-repeat;*/
     background-size: 100% 100%;
     width: 150px;
     height: 73px;
