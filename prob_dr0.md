@@ -81,6 +81,10 @@ Bishop, Christopher M. "Model-based machine learning." Phil. Trans. R. Soc. A 37
 ---
 
 # 4. Emsemble t-SNE
++ Construction of many t-SNE model (with different params)
++ Not use all feature of input data (-> have many combination of input features)
++ Take into account other params of t-SNE (e.g. degree of freedom for t-distribution)
++ If we can simulate the case we have `infinite` models, can we use Bayesian Optimization to select the good one?
 
 ---
 
