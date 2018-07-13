@@ -43,7 +43,7 @@ Bishop, Christopher M. "Model-based machine learning." Phil. Trans. R. Soc. A 37
 
 ---
 
-# 1. t-SNE + GMM (2)
+# t-SNE + GMM
 
 - How?
     + Calculate $P$ and $Q$ as in t-SNE
@@ -51,7 +51,7 @@ Bishop, Christopher M. "Model-based machine learning." Phil. Trans. R. Soc. A 37
 
 - User Constraints:
     + Fixed: number of clusters, position of centroids of some clusters, pairwise constraints.
-    + Interactive: merge or divise cluster.
+    + Interactive: merge or divide cluster.
 
 <div class="mermaid">
 
@@ -59,41 +59,76 @@ Bishop, Christopher M. "Model-based machine learning." Phil. Trans. R. Soc. A 37
 
 ---
 
-# 2. Idea of Variational Inference for t-SNE
+# 2. Idea of Variational Inference
 
-.width-80[![](./figures/vi0.png)]
++ Many ML problems are to evaluate the posterior $p(z|x)$
++ Inference: transforming prior $p(z)$ to posterior $p(z|x)$ by observing the data.
++ Posit a **variational family** of distribution over latent variable $q(z; \nu)$
++ Fit $\nu$ to make $q$ close to $p$ in term of $KL[q||p]$
+
+.right[.width-60[![](./figures/vi0.png)]]
 
 .footnote[http://www.cs.columbia.edu/~blei/talks/2016_NIPS_VI_tutorial.pdf]
 ---
 
-.width-40[![](./figures/vi1.png)]
-.width-40[![](./figures/vi2.png)]
-.width-40[![](./figures/vi3.png)]
----
 
-# 3. Modify Parametric t-SNE
+# EM as VI problem
 
-|||
-|--|--|
-|+ RBM is undirected graphical model, can used for DR <br> + Idea: Add constraint to pre-training step.|.width-80[![](./figures/parametric_tsne.png)]|
++ Goal: Maximum likelihood $p(X|\theta)$: find $\theta$ that maximizes $p(X|\theta)$.
++ VI framework:
+    * avoid evaluating $p(X|\theta)$ directly
+    * find a simple distribution q to form a **lower bound** $\mathcal{L}(\theta, q)$
+    * measure the gap between the approximated distribution $q$ and the target distribution $p$ by $KL[q||p]$
+    * apply EM mechanism to find $q$ and $\theta$ that maximize $\mathcal{L}(\theta, q)$
 
-.footnote[Maaten, Laurens. "Learning a parametric embedding by preserving local structure." Artificial Intelligence and Statistics. 2009.]
----
+.width-30[![](./figures/vi_em0.png)]
+.width-30[![](./figures/vi_em1.png)]
+.width-30[![](./figures/vi_em2.png)]
 
-# 4. Emsemble t-SNE
-+ Construction of many t-SNE model (with different params)
-+ Not use all feature of input data (-> have many combination of input features)
-+ Take into account other params of t-SNE (e.g. degree of freedom for t-distribution)
-+ If we can simulate the case we have `infinite` models, can we use Bayesian Optimization to select the good one?
 
 ---
 
-# 5. AutoEncoder with a Probabilistic Decoder
+# Idea: VI for t-SNE with constraints
++ $p, q$: probability distribution in HD and LD
++ $p$ is fixed, $q$ is variated and controlled by the constraints $\theta$
++ Measure the different between $p$ and $q$ by $KL[q||p]$
++ Among all variational distribution of $\mathcal{L}(\theta, q)$, find one that minimize $KL$.
+
+.width-30[![](./figures/vi1.png)]
+.width-30[![](./figures/vi2.png)]
+.width-30[![](./figures/vi3.png)]
+---
+
+# 3. AutoEncoder under probabilistic framework
 
 Model is described by the `Encoder`, Inference occurs in the `Decoder` -> Can put constraints on both parts.
 .right[![](./figures/vi_encdec.png)]
 
-.footnote[http://blog.shakirm.com/2015/03/a-statistical-view-of-deep-learning-ii-auto-encoders-and-free-energy/]
+.footnote[http://blog.shakirm.com/2015/03/a-statistical-view-of-deep-learning-ii-auto-encoders-and-free-energy/<br>
+Kingma, Diederik P., and Max Welling. "Auto-encoding variational bayes." arXiv preprint arXiv:1312.6114 (2013).]
+
+---
+
+# 4. Modify Parametric t-SNE
+
+|||
+|--|--|
+|+ RBM is undirected graphical model, can used for dimensionality reduction <br> + Idea: Add constraint to pre-training step.|.width-80[![](./figures/parametric_tsne.png)]|
+
+.footnote[Maaten, Laurens. "Learning a parametric embedding by preserving local structure." Artificial Intelligence and Statistics. 2009.]
+
+---
+
+# 5. Ensemble t-SNE
+
++ Use parametric t-SNE to obtain an explicit mapping.
++ Randomly take some input features (not all) to build many t-SNE models.
++ Using the idea of average weighting in [1] to construct the final models.
+
+.footnote[[1]Izmailov, Pavel, et al. "Averaging Weights Leads to Wider Optima and Better Generalization." arXiv preprint arXiv:1803.05407 (2018).]
+
++ Or: construct many t-SNE models (with different params), and use **Bayesian Optimization** to do hyperparameter tuning to select the best one (?)
+
 ---
 
 
@@ -105,11 +140,14 @@ class: middle
 
 # RQ1
 
-How to define a uniform probabilistic model
-for both DR and clustering?
+- How to define a uniform probabilistic model that can describe (at the same time):
+    + the data distribution in high dimensional space
+    + a cluster structure in low dimensional space
+    + user constraints
+
 - Goal:
     + obtain a visualization with clear structures (as clusters)
-    + a 'gateway' to use the constraints that work on clustering methods.
+    + a _gateway_ to use the constraints that work on clustering methods.
 
 ---
 
@@ -118,12 +156,8 @@ for both DR and clustering?
 How to present (many types of) user constraints
 under the probabilistic framework?
 
----
-
-# User knowledges
-
 + Prior knowledges:
-    * specifying conditional independencies among variables
+    * specifying conditional independences among variables
     * specifying Bayesian network structure
     * determining values of some params
     * defining the prior distribution over params.
