@@ -109,6 +109,18 @@ Kingma, Diederik P., and Max Welling. "Auto-encoding variational bayes." arXiv p
 
 ---
 
+# VAE
+
++ Standard AE: output real value for each `latent feature`
++ Variational AE: output probabilistic distribution for latent variables.
+
+.width-40[![](./figures/vae_eg.png)]
+.width-50[![](./figures/vae_latentvar.png)]
+
+.footnote[https://www.jeremyjordan.me/variational-autoencoders/]
+
+---
+
 # 4. Modify Parametric t-SNE
 
 |||
