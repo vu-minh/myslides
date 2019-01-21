@@ -29,7 +29,7 @@ Bishop, Christopher M. "Model-based machine learning." Phil. Trans. R. Soc. A 37
 
 ---
 
-.width-100[![](./figures/prob_ml.png)]
+.width-100[![](./figures/prob_ml/prob_ml.png)]
 
 ---
 
@@ -66,7 +66,7 @@ Bishop, Christopher M. "Model-based machine learning." Phil. Trans. R. Soc. A 37
 + Posit a **variational family** of distribution over latent variable $q(z; \nu)$
 + Fit $\nu$ to make $q$ close to $p$ in term of $KL[q||p]$
 
-.right[.width-60[![](./figures/vi0.png)]]
+.right[.width-60[![](./figures/prob_ml/vi0.png)]]
 
 .footnote[http://www.cs.columbia.edu/~blei/talks/2016_NIPS_VI_tutorial.pdf]
 ---
@@ -81,9 +81,9 @@ Bishop, Christopher M. "Model-based machine learning." Phil. Trans. R. Soc. A 37
     * measure the gap between the approximated distribution $q$ and the target distribution $p$ by $KL[q||p]$
     * apply EM mechanism to find $q$ and $\theta$ that maximize $\mathcal{L}(\theta, q)$
 
-.width-30[![](./figures/vi_em0.png)]
-.width-30[![](./figures/vi_em1.png)]
-.width-30[![](./figures/vi_em2.png)]
+.width-30[![](./figures/prob_ml/vi_em0.png)]
+.width-30[![](./figures/prob_ml/vi_em1.png)]
+.width-30[![](./figures/prob_ml/vi_em2.png)]
 
 
 ---
@@ -94,15 +94,15 @@ Bishop, Christopher M. "Model-based machine learning." Phil. Trans. R. Soc. A 37
 + Measure the different between $p$ and $q$ by $KL[q||p]$
 + Among all variational distribution of $\mathcal{L}(\theta, q)$, find one that minimize $KL$.
 
-.width-30[![](./figures/vi1.png)]
-.width-30[![](./figures/vi2.png)]
-.width-30[![](./figures/vi3.png)]
+.width-30[![](./figures/prob_ml/vi1.png)]
+.width-30[![](./figures/prob_ml/vi2.png)]
+.width-30[![](./figures/prob_ml/vi3.png)]
 ---
 
 # 3. AutoEncoder under probabilistic framework
 
 Model is described by the `Encoder`, Inference occurs in the `Decoder` -> Can put constraints on both parts.
-.right[![](./figures/vi_encdec.png)]
+.right[![](./figures/prob_ml/vi_encdec.png)]
 
 .footnote[http://blog.shakirm.com/2015/03/a-statistical-view-of-deep-learning-ii-auto-encoders-and-free-energy/<br>
 Kingma, Diederik P., and Max Welling. "Auto-encoding variational bayes." arXiv preprint arXiv:1312.6114 (2013).]
@@ -114,8 +114,8 @@ Kingma, Diederik P., and Max Welling. "Auto-encoding variational bayes." arXiv p
 + Standard AE: output real value for each `latent feature`
 + Variational AE: output probabilistic distribution for latent variables.
 
-.width-40[![](./figures/vae_eg.png)]
-.width-50[![](./figures/vae_latentvar.png)]
+.width-40[![](./figures/prob_ml/vae_eg.png)]
+.width-50[![](./figures/prob_ml/vae_latentvar.png)]
 
 .footnote[https://www.jeremyjordan.me/variational-autoencoders/]
 
@@ -125,7 +125,7 @@ Kingma, Diederik P., and Max Welling. "Auto-encoding variational bayes." arXiv p
 
 |||
 |--|--|
-|+ RBM is undirected graphical model, can used for dimensionality reduction <br> + Idea: Add constraint to pre-training step.|.width-80[![](./figures/parametric_tsne.png)]|
+|+ RBM is undirected graphical model, can used for dimensionality reduction <br> + Idea: Add constraint to pre-training step.|.width-80[![](./figures/prob_ml/parametric_tsne.png)]|
 
 .footnote[Maaten, Laurens. "Learning a parametric embedding by preserving local structure." Artificial Intelligence and Statistics. 2009.]
 
