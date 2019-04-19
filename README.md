@@ -2,6 +2,19 @@
 
 A ready-to-fork template for talks, using [remark](https://github.com/gnab/remark), [KaTeX](https://github.com/Khan/KaTeX) and some customised CSS.
 
+# export to pdf
+
+```
+(16:16):myslides$ decktape http://127.0.0.1:5500/?p=esann2019.md pdf/esann2019.pdf
+Loading page http://127.0.0.1:5500/?p=esann2019.md ...
+Live reload enabled.
+Loading page finished with status: 200
+Remark JS plugin activated
+Printing slide #12      (12/12) ...
+Printed 12 slides
+```
+
+
 ## Instructions
 
 - Clone this repository:
@@ -13,6 +26,10 @@ cd talk-template
 ```
 python -m http.server 8001
 ```
+(Or `http-server -p 8001` if having [http-server](https://github.com/indexzero/http-server) installed)
+- For live reload feature, use nodejs [live-server](https://github.com/tapio/live-server)
+(Or `live-server` in vscode with default port 5500)
+
 - Edit `talk.md` for making your slides.
 - Use [decktape](https://github.com/astefanutti/decktape) for exporting your slides to PDF.
 
