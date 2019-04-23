@@ -18,8 +18,7 @@ Introducing our work on integrating the user's feedbacks on the visualization in
 
 ---
 
-## Visualization of high dimensional data:
-## Dimensionality Reduction (DR) problem
+## Problem: Dimensionality Reduction (DR)
 
 .center.width-80[![](figures/esann2019/Fashion_MNIST_samples.png)]
 .caption[Samples from the Fashion-MNIST dataset]
@@ -27,46 +26,68 @@ Introducing our work on integrating the user's feedbacks on the visualization in
 .footnote[https://github.com/zalandoresearch/fashion-mnist]
 
 ---
-count: true
-## Probabilistic Principle Component Analysis (PPCA)
 
-.center.width-70[![](figures/esann2019/FASHION100_init_ppca.png)]
-.caption[Having an initial visualization with PPCA model ...]
+## Visualization of high dimensional data
 
-
----
-count: true
-## Proposed Interactive PPCA (iPPCA)
-
-.center.width-70[![](figures/esann2019/FASHION100_selected_points.png)]
-.caption[The user wants to manipulate the visualization by moving some points]
+.center.width-60[![](figures/esann2019/FASHION100_init_ppca.png)]
+Having an initial visualization with the Probabilistic Principle Component Analysis (PPCA) model ...
 
 
 ---
-count: true
-## iPPCA result
 
-.center.width-70[![](figures/esann2019/FASHION100_ippca_result.png)]
-.caption[The result of the interactive model is explainable to the users]
+## Proposed Method: Interactive PPCA (iPPCA)
+
+.center.width-60[![](figures/esann2019/FASHION100_selected_points.png)]
+The user wants to manipulate the visualization by moving some points.
+
+
+---
+
+## iPPCA Result
+
+.center.width-60[![](figures/esann2019/FASHION100_ippca_result.png)]
+The result of the interactive model is explainable to the users.
 
 
 ---
-# Motivation
-
-*User interaction in model design and analysis*
-
----
-count: true
 
 # Motivation
 
 *User interaction in model design and analysis*
-
-+ Visual analytic with Human-in-the-loop
 
 .center.width-100[![](figures/esann2019/ml_with_human.png)]
+.caption[Visual analytic with Human-in-the-loop]
+
++ The user can interact directly with the visualization to give their feedbacks.
++ The model can update itself to take into account these feedbacks and produce a new visualization.
+
 
 .footnote[Sacha, Dominik, et al. "Knowledge generation model for visual analytics." IEEE TVCG 2014]
+
+
+---
+count: true
+# Existing approaches
+
+*Integrating **user's feedbacks** into existing DR methods*
+
+|Constrained DR methods| Constrained objective functions|
+|---|---|
+|Weighted MDS| .width-60[![](figures/esann2019/reg_term_eg1.png)] |
+|Semi-supervised PCA|  .width-60[![](figures/esann2019/reg_term_eg2.png)] |
+|Constrained Locality Preserving Projections|  .width-60[![](figures/esann2019/reg_term_eg2.png)] |
+
++ User's feedbacks $\Longrightarrow$ **Regularization term**
++ Jointly optimized with the <span style="color:blue">Objective function</span> of the basic DR method.
+---
+
++ Weighted MDS:
+$$
+\mathbf{Y} = \text{argmin}\_{\mathbf{Y}}
+\sum\_{i < j \leq n} \rho 	 \Big| d\_{\omega}(i,j) - d\_{Y}(i,j) \Big| +  (1-\rho) \Big | d\_{\omega\_{F}}(i,j) - d\_{Y}(i,j) \Big |
+$$
+
++ Semi-supervised PCA:
 
 
 ---
@@ -105,70 +126,10 @@ count: true
 
 
 ---
-# Existing approaches
-
-*Intergrating **user's feedbacks** into existing DR methods*
-
-Some (complicated) examples.
-
-
----
-count: true
-
-# Existing approaches
-
-*Intergrating **user's feedbacks** into existing DR methods*
-
-.grid[
-.kol-1-2[
-.center.width-100[![](figures/esann2019/reg_term_eg1.png)]
-]
-.kol-1-2[
-]
-]
-
----
 count: true
 # Existing approaches
 
-*Intergrating **user's feedbacks** into existing DR methods*
-
-.grid[
-.kol-1-2[
-.center.width-100[![](figures/esann2019/reg_term_eg1.png)]
-.center.width-100[![](figures/esann2019/reg_term_eg2.png)]
-]
-.kol-1-2[
-]
-]
-
----
-count: true
-# Existing approaches
-
-*Intergrating **user's feedbacks** into existing DR methods*
-
-.grid[
-.kol-1-2[
-.center.width-100[![](figures/esann2019/reg_term_eg1.png)]
-.center.width-100[![](figures/esann2019/reg_term_eg2.png)]
-]
-.kol-1-2[
-.center.width-100[![](figures/esann2019/reg_term_eg3.png)]
-]
-]
-
-
-???
-+ weighted MDS
-+ Constrained Locality Preserving Projections (LPP)
-+ Semi-supervised PCA (A is weights matrix)
-
----
-count: true
-# Existing approaches
-
-*Intergrating **user's feedbacks** into existing DR methods*
+*Integrating **user's feedbacks** into existing DR methods*
 
 .grid[
 .kol-1-2[
@@ -202,14 +163,14 @@ count: true
 
 # Existing approaches
 
-Intergrating **user's feedbacks** into existing DR methods as a **regularization term**
+Integrating **user's feedbacks** into existing DR methods as a **regularization term**
 
 ---
 count: true
 
 # Existing approaches and ours
 
-Intergrating **user's feedbacks** into $\underbrace{\footnotesize{ \text{existing DR methods} }}_{\Downarrow}$ ~~as a **regularization term**~~
+Integrating **user's feedbacks** into $\underbrace{\footnotesize{ \text{existing DR methods} }}_{\Downarrow}$ ~~as a **regularization term**~~
 
 .center[$\text{ \small{a probabilistic dimensionality reduction model} }$]
 
@@ -218,7 +179,7 @@ count: true
 
 # Existing approaches and ours
 
-Intergrating **user's feedbacks** into $\underbrace{\footnotesize{ \text{existing DR methods} }}_{\Downarrow}$ ~~as a **regularization term**~~
+Integrating **user's feedbacks** into $\underbrace{\footnotesize{ \text{existing DR methods} }}_{\Downarrow}$ ~~as a **regularization term**~~
 
 .center[$\text{ \small{a probabilistic dimensionality reduction model} }$]
 
@@ -234,7 +195,7 @@ count: true
 
 .center.width-80[![](figures/esann2019/box_model_apply.png)]
 
-The user-indicated postion of selected points is modelled directly
+The user-indicated position of selected points is modelled directly
 
 in the <span style="color:purple">prior distribution</span> of the PPCA model.
 
@@ -297,17 +258,26 @@ where $\mathbf{\theta}$ represents all model's parameters.
 
 ---
 count: true
-# Some working examples
+## 100 samples images from the Fashion dataset
 
-.center.width-100[![](figures/esann2019/FASHION100_ippca_compare.png)]
-.caption[100 images of Fashion dataset]
+.center.width-90[![](figures/esann2019/FASHION100_ippca_compare.png)]
+
+.grid[
+.kol-1-2[
+aa    a
+]
+.kol-1-2[
+.width-70[![](figures/esann2019/annote_iPPCA_FASHION.svg) &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+]
+]
+
 
 ---
 count: true
 # Some working examples
 
 .center.width-100[![](figures/esann2019/automobile_eg.png)]
-.caption[203 datapoints in Automobile dataset]
+.caption[203 data points in Automobile dataset]
 
 ---
 # More discussion on the motivation of this approach
