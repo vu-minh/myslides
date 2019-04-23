@@ -11,9 +11,9 @@ body {
 .footnote {
   position: absolute;
   bottom: 2em;
-  font-size: 0.5em;
+  font-size: 0.8em; /*minh, bigger footnote size for ESANN slides*/
   opacity: 0.75;
-  margin-left: -5.5em;
+  margin-left: -3.5em;
 }
 
 
