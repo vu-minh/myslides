@@ -11,6 +11,8 @@ University of Namur, Belgium
 
 25/04/2019
 
+???
+Introducing our work on integrating the user's feedbacks on the visualization into a probabilistic DR method.
 
 ---
 
@@ -27,7 +29,7 @@ count: false
 ## Probabilistic Principle Component Analysis (PPCA)
 
 .center.width-70[![](figures/esann2019/FASHION100_init_ppca.png)]
-.caption[Having an initial visualization with PPCA model, ...]
+.caption[Having an initial visualization with PPCA model ...]
 
 
 ---
@@ -181,6 +183,12 @@ count: false
 .center.width-100[![](figures/esann2019/reg_term_eg3.png)]
 ]
 ]
+
+
+???
++ weighted MDS
++ Constrained Locality Preserving Projections (LPP)
++ Semi-supervised PCA (A is weights matrix)
 
 ---
 count: false
