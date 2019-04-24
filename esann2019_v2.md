@@ -23,8 +23,6 @@ Introducing our work on integrating the user's feedbacks on the visualization in
 .center.width-80[![](figures/esann2019/Fashion_MNIST_samples.png)]
 .caption[Samples from the Fashion-MNIST dataset]
 
-.footnote[https://github.com/zalandoresearch/fashion-mnist]
-
 ---
 
 ## Visualization of high dimensional data
@@ -35,7 +33,7 @@ Having an initial visualization with the Probabilistic Principle Component Analy
 
 ---
 
-## Proposed Method: Interactive PPCA (iPPCA)
+## Proposed interactive PPCA model (iPPCA)
 
 .center.width-60[![](figures/esann2019/FASHION100_selected_points.png)]
 The user can manipulate the visualization by moving some points.
@@ -43,7 +41,7 @@ The user can manipulate the visualization by moving some points.
 
 ---
 
-## iPPCA Result
+## iPPCA result
 
 .center.width-60[![](figures/esann2019/FASHION100_ippca_result.png)]
 The result of the interactive model is explainable to the users.
@@ -55,13 +53,13 @@ The result of the interactive model is explainable to the users.
 *User interaction in model design and analysis*
 
 .center.width-100[![](figures/esann2019/ml_with_human.png)]
-.caption[Visual analytic with Human-in-the-loop]
+.caption[Visual analytic method with Human-in-the-loop $^{[1]}$]
 
 + The user can interact directly with the visualization to give their feedbacks.
 + The model can update itself to take into account these feedbacks and produce a new visualization.
 
 
-.footnote[Sacha, Dominik, et al. "Knowledge generation model for visual analytics." IEEE TVCG 2014]
+.footnote[[1]Sacha, Dominik, et al. "Knowledge generation model for visual analytics." IEEE TVCG 2014]
 
 
 ---
@@ -129,7 +127,7 @@ count: false
 *Integrating **user's feedbacks** into existing DR methods*
 
 + User's feedbacks $\Longrightarrow$ **Explicit regularization term**
-+ Jointly optimized with the <span style="color:blue">Objective function</span> of the basic DR methods.
++ Jointly optimized with the <span style="color:blue">objective function</span> of the basic DR methods.
 
 *Problems?*
 + Many discrete methods
@@ -147,86 +145,74 @@ count: false
 
 ---
 
-# Proposed Interactive PPCA model
+# Probabilistic PCA
++ *Probabilistic reformulation as the basic for a Bayesian treatment of PCA $^{[1]}$*
 
-+ PCA method under probabilistic view point
-+ Modeling by full Bayesian PCA model
-+ **User's feedbacks** $\Large \approx$ <span style="color:purple">prior knowledge</span> to (re)construct the model.
++ Illustration for the generative process in PPCA model $^{[2]}$
+    - generate 2-dimensional data $\color{green}{p(\mathbf{x})}$  from 1-dimensional latent variable $\color{purple}{p({z})}$
 
-.center.width-80[![](figures/esann2019/FASHION100_ippca_compare.png)]
+.center.width-90[![](figures/esann2019/Bishop_Figure12.9.png)]
 
----
-
-
-The user-indicated position of selected points is modelled directly
-
-in the <span style="color:purple">prior distribution</span> of the PPCA model.
-
+.footnote[[1]Bishop, Christopher M. "Bayesian pca." Advances in neural information processing systems. 1999.<br>[2]Bishop's PRML book, Figure 12.9]
 
 ---
 
-# A closer look at the PPCA model
+# Probabilistic PCA
 
-## A generative view of the probabilistic PCA model.
-+ 2-dimensional data $\color{green}{p(\mathbf{x})}$
-+ generated from 1-dimensional latent variable $\color{purple}{p(\mathbf{z})}$
-
-.center.width-100[![](figures/esann2019/Bishop_Figure12.9.png)]
-
-.footnote[Bishop's PRML Figure. 12.9]
-
----
-
-# Proposed interactive PPCA model
-
-+ $\mathbf{X} = \\{ \mathbf{x}_n \\}$: observed dataset of N data points of D-dimensions.
-+ The embedded points in the 2D visualization imply the corresponding latent variables $\mathbf{Z} = \\{ \mathbf{z}_n \\}$.
-+ The moved points in the visualization are modelled in the prior distribution of $\mathbf{Z}$
-.center.width-70[![](figures/esann2019/pz.png)]
-+ The iPPCA model:
-$
-    \mathbf{x}\_n \mid \mathbf{z}\_n \sim \mathcal{N}(\mathbf{x}\_n \mid \mathbf{W}\mathbf{z}\_n, \; \sigma^{2}\mathbf{I}\_{\_{D}}).
-$
++ $\mathbf{X} = \\{ \mathbf{x}_n \\}$: N observations of D-dimensions.
++ The embedded points in the 2D visualization are the latent variables $\mathbf{Z} = \\{ \mathbf{z}_n \\}$.
++ Likelihood
+$\mathbf{x}\_n \mid \mathbf{z}\_n \sim \mathcal{N}(\mathbf{x}\_n \mid \mathbf{W}\mathbf{z}\_n, \; \sigma^{2}\mathbf{I}\_{\_{D}})$
 + The inference problem:
-$
-\mathbf{\theta}\_{\_{MAP}} = \text{argmax}\_{\mathbf{\theta}} \log p(\mathbf{\theta} \mid \mathbf{X})
-$
-where $\mathbf{\theta}$ represents all model's parameters.
+${\theta}\_{\_{MAP}} = \text{argmax}\_{\bf{\theta}} \log p(\mathbf{\theta} \mid \mathbf{X})$
+where $\mathbf{\theta}$ represents all the model's parameters (including $\mathbf{Z}$).
 + The MAP estimate of the latent variables $\mathbf{Z}$ is found by following the partial gradient $\nabla_{\mathbf{Z}} \log p(\mathbf{\theta}, \mathbf{X})$ to its local optima.
 
 ---
-# How the user prior is handled?
-+ The user can fix the position of several interested points, with some **level of uncertainty** ($\sigma_{fix}$)
-+ A very small **uncertainty** $\Longrightarrow$ the user is very certain.
-+ A large **uncertainty** $\Longrightarrow$ the user is not sure.
+
+# Proposed Interactive PPCA model
+
++ iPPCA: The user-indicated position of the selected points is modelled directly
+in the <span style="color:purple">prior distribution</span> of the PPCA model.
+
+.center.width-80[![](figures/esann2019/pz.png)]
+.center.width-80[![](figures/esann2019/FASHION100_ippca_compare.png)]
+
+
+---
+# How user's constraints are handled?
++ The user can fix the position of several interested points, with some **level of uncertainty** ($\sigma^2_{fix}$)
++ A very small variance $\Longrightarrow$ the user is very certain.
++ A large variance $\Longrightarrow$ the user is not sure.
 
 .grid[
 .kol-1-3[
 .center.width-100[![](figures/esann2019/prior_sigmafix.png)]
-.caption[user's uncertainty $\sigma_{fix}$]
+.caption[user's uncertainty $\sigma^2_{fix}$]
 ]
 .kol-1-3[
 .center.width-100[![](figures/esann2019/prior_small_sigmafix.png)]
-.caption[Very small $\sigma_{fix} = 1e-4$: very sure]
+.caption[$\sigma^2_{fix} = 1e-4$:<br> very sure]
 ]
 .kol-1-3[
 .center.width-90[![](figures/esann2019/prior_large_sigmafix.png)]
-.caption[Large $\sigma_{fix} = 0.2$: very uncertain]
+.caption[$\sigma^2_{fix} = 0.2$:<br> very uncertain]
 ]
 ]
 
 ---
+
 # Evaluation of the iPPCA model
 *The workflow:*
 + Show the initial visualization of the (original) PPCA model
 + The user selects and moves some anchor points
 + Reconstruct the iPPCA model to create a new visualization.
-    - The uncertainty of the feedbacks ($\sigma_{fix}$) is small
+    - The uncertainty of the feedbacks ($\sigma^2_{fix}$) is small
     - Hyper parameters of the optimization process are chosen to be the best
 
 *How to evaluate:*
 + Show how to explain the new visualization
-    - The level for which we can understand / explain the visualization is considered as a qualitative measure
+    - The level on which we can understand / explain the visualization is considered as a qualitative measure
 
 
 ---
@@ -258,7 +244,7 @@ where $\mathbf{\theta}$ represents all model's parameters.
 
 *How to explain the new axes?*
 + Horizontal axis represents **shape**
-+ The vertical axis represents **color density**
++ Vertical axis represents **color density**
 
 
 ---
@@ -278,19 +264,20 @@ where $\mathbf{\theta}$ represents all model's parameters.
 
 
 ---
-# Advantage of Probabilistic Approach
+# Advantage of probabilistic approach
 
 *Combination of solid theoretical models and modern powerful inference toolboxes*
 + Take any old-class model or modern generative model
-+ Plug into a probability framework (Stan, PyMC3, Pyro, Tensorflow Probability) which support modern inference methods like *Stochastic Variational Inference (SVI)*
++ Plug into a probability framework $^{[1]}$  which support modern inference methods like *Stochastic Variational Inference (SVI)*
 
-*Can easily extend the classic models* (Extend the general generative process)
+*Can easily extend the generative process
 $$
 \mathbf{x}_n \mid \mathbf{z}_n \sim \mathcal{N}(f(\mathbf{z}_n), \sigma^{2} \mathbf{I})
 $$
 + in PPCA model, $f(\mathbf{z}_n) = \mathbf{W} \mathbf{z}_n$
-+ $f(\mathbf{z}_n)$ can be any high-capacity representation function (a neural net)
++ $f(\mathbf{z}_n)$ can be any high-capacity representation function<br> (a neural net)
 
+.footnote[[1] Stan, PyMC3, Pyro, TensorFlow Probability]
 
 ---
 
@@ -298,21 +285,19 @@ $$
 .kol-1-2[.width-100[![](figures/esann2019/DIGITS_PCA.png)]]
 .kol-1-2[.width-100[![](figures/esann2019/DIGITS_hd50.png)]]
 ]
-.caption[Embedding of 1797 digits with PCA (on the left) and with modified PPCA (on the right)]
+.caption[Embedding of DIGITS dataset with the original PCA and the modified PPCA model]
 
 + The decoder $f(\mathbf{z})$ of PPCA is a simple neural network with one hidden layer of 50 units and a sigmoid activation function.
-+ The inference is done by the Pyro's built-in SVI optimizer.
++ The inference is done by the Pyro's built-in SVI optimizer $^{[1]}$.
 
-.footnote[Pyro, Deep Universal Probabilistic Programming, http://pyro.ai/]
+.footnote[[1] Pyro, Deep Universal Probabilistic Programming, http://pyro.ai/]
 
 ---
 # Recap
 
 Propose the interactive PPCA model allowing the user to control the visualization
 
-+ **[Why]**  
-    - *communicate the analytical result*: e.g., create an explainable visualization
-    - explore the visualizations (*"what-if" analysis*)
++ **[Why]** To communicate the analytical result (e.g., create an explainable visualization) and to explore the visualizations (*"what-if" analysis*)
 
 + **[How]** The user's feedbacks can be efficiently integrated into a probabilistic model via prior distributions of latent variables.
 
@@ -322,7 +307,7 @@ Propose the interactive PPCA model allowing the user to control the visualizatio
 
 ---
 class: middle, center, 
-count: true
+count: false
 
 background-image: url(figures/esann2019/bg.png)
 background-opacity: 0.1
