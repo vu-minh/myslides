@@ -251,68 +251,22 @@ where $\mathbf{\theta}$ represents all model's parameters.
 
 
 ---
-# Some working examples
+# Quickdraw dataset (90 images)
 
 .center.width-100[![](figures/esann2019/quickdraw_eg.png)]
 .caption[90 images of Quickdraw dataset]
 
 ---
-count: true
-## 100 samples images from the Fashion dataset
+## Fashion dataset (100 images)
 
 .center.width-90[![](figures/esann2019/FASHION100_ippca_compare.png)]
-
-.grid[
-.kol-1-2[
-aa    a
-]
-.kol-1-2[
-.width-70[![](figures/esann2019/annote_iPPCA_FASHION.svg) &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
-]
-]
-
+.push-1-2.width-40[&nbsp;&nbsp;&nbsp;![](figures/esann2019/annote_iPPCA_FASHION.svg)]
 
 ---
-count: true
-# Some working examples
+## Automobile dataset (203 data points)
 
 .center.width-100[![](figures/esann2019/automobile_eg.png)]
-.caption[203 data points in Automobile dataset]
 
----
-# More discussion on the motivation of this approach
-
-+ Problem of PPCA's **ambiguous-rotation**:
-
----
-count: true
-# More discussion on the motivation of this approach
-
-+ Problem of PPCA's **ambiguous-rotation**:
-.center.width-50[![](figures/esann2019/rotation_fun2.png)]
-.caption[*The* wife in my eyes]
-
----
-count: true
-# More discussion on the motivation of this approach
-
-+ Problem of PPCA's **ambiguous-rotation**:
-.center.width-50[![](figures/esann2019/rotation_fun0.png)]
-.caption[*The* wife in others' eyes]
-
----
-count: true
-# More discussion on the motivation of this approach
-
-*Problem of PPCA's **ambiguous-rotation**:*
-+ The principle components in PPCA are not necessarily orthogonal
-+ The visualization can thus be in any rotation around the origin
-
-
-*Role of user interaction:*
-+ Can be considered as a complement to solve the above ambiguity
-+ The user's decision is subjective, but can help to communicate the analytical result
-+ Creating a more understandable, easily explainable visualization
 
 ---
 # Advantage of probabilistic approach
@@ -332,11 +286,17 @@ $$
 
 
 ---
-count: true
-# Advantage of probabilistic approach
 
-.center.width-50[![](figures/esann2019/eg_digits.png)]
-.caption[Embedding of 1797 digits with modified PPCA in which a decoder $f(\mathbf{z})$ is a simple neural network with one hidden layer of 50 units and a sigmoid activation function. The inference is done with pyro's built-in SVI optimizer.]
+.grid[
+.kol-1-2[.width-100[![](figures/esann2019/DIGITS_PCA.png)]]
+.kol-1-2[.width-100[![](figures/esann2019/DIGITS_hd50.png)]]
+]
+.caption[Embedding of 1797 digits with PCA (on the left) and with modified PPCA (on the right)]
+
++ The decoder $f(\mathbf{z})$ in PPCA is a simple neural network with one hidden layer of 50 units and a sigmoid activation function.
++ The inference is done with pyro's built-in SVI optimizer.
+
+.footnote[pyro, Deep Universal Probabilistic Programming, http://pyro.ai/]
 
 ---
 # Recap
