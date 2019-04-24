@@ -82,13 +82,25 @@ count: true
 ---
 
 + Weighted MDS:
+.larger[
 $$
 \mathbf{Y} = \text{argmin}\_{\mathbf{Y}}
-\sum\_{i < j \leq n} \rho 	 \Big| d\_{\omega}(i,j) - d\_{Y}(i,j) \Big| +  (1-\rho) \Big | d\_{\omega\_{F}}(i,j) - d\_{Y}(i,j) \Big |
+\sum\_{i < j \leq n} \rho 	 \Big| d\_{\omega}(i,j) - d\_{Y}(i,j) \Big| + (1-\rho) \Big | d\_{\omega\_{F}}(i,j) - d\_{Y}(i,j) \Big |
 $$
+]
 
-+ Semi-supervised PCA:
++ Semi-supervised PCA with ensemble of **Must-links (ML)** and **Cannot-links (CL)**:
+$$
+J(\mathbf{W}) = \frac{1}{2 n^2} \sum\_{i,j} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 + \frac{\alpha}{2 n\_{CL}} \sum\_{CL} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 - \frac{\beta}{2 n\_{ML}} \sum\_{ML}{ | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2
+$$
+where $\mathbf{y}\_{j} = \mathbf{W}^T {\mathbf{x}}\_{j}$
 
+$$
+\mathbf{W}  = argmin\_{\mathbf{W}} \frac{1}{2} \Big( \sum\_{i,j}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 {W}_{ij} 
+ + \sum\_{ML'}(\mathbf{y}\_{i}
+ - \mathbf{y}\_{j})^2  - \sum\_{CL'}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 
+\Big)
+$$
 
 ---
 count: true
@@ -251,7 +263,7 @@ where $\mathbf{\theta}$ represents all model's parameters.
 
 ---
 # Evaluation of the iPPCA model
-*The work flow:*
+*The workflow:*
 + First, show the initial visualization of the (original) PPCA model
 + Then the user selects and moves some anchor points
 + Finally, reconstruct the iPPCA model, re-run inference to create a new visualization.
@@ -290,7 +302,7 @@ where $\mathbf{\theta}$ represents all model's parameters.
 ]]
 
 *How to explain the new axes?*
-+ The horizontal axis represents **shape**
++ Horizontal axis represents **shape**
 + The vertical axis represents **color density**
 
 
@@ -311,20 +323,20 @@ where $\mathbf{\theta}$ represents all model's parameters.
 
 
 ---
-# Advantage of probabilistic approach
+# Advantage of the Probabilistic Approach
 
 *Combination of solid theoretical models and modern powerful inference toolboxes*
 + Take any old-class model or modern generative model
 + Plug into a modern probability framework (Stan, PyMC3, Pyro, Tensorflow Probability)
 
 *Can easily extend the classic models*
-+ extend the general generative process:
++ Extend the general generative process:
 $$
 \mathbf{x}_n \mid \mathbf{z}_n \sim \mathcal{N}(f(\mathbf{z}_n), \sigma^{2} \mathbf{I})
 $$
     - in PPCA model, $f(\mathbf{z}_n) = \mathbf{W} \mathbf{z}_n$
     - but $f(\mathbf{z}_n)$ can be any high-capacity representation function (a neural net)
-+ take advantages of the modern inference methods, e.g., *Stochastic Variational Inference*
++ Take advantages of the modern inference methods, e.g., *Stochastic Variational Inference (SVI)*
 
 
 ---
@@ -335,17 +347,19 @@ $$
 ]
 .caption[Embedding of 1797 digits with PCA (on the left) and with modified PPCA (on the right)]
 
-+ The decoder $f(\mathbf{z})$ in PPCA is a simple neural network with one hidden layer of 50 units and a sigmoid activation function.
-+ The inference is done with pyro's built-in SVI optimizer.
++ The decoder $f(\mathbf{z})$ of PPCA is a simple neural network with one hidden layer of 50 units and a sigmoid activation function.
++ The inference is done by the pyro's built-in SVI optimizer.
 
 .footnote[pyro, Deep Universal Probabilistic Programming, http://pyro.ai/]
 
 ---
 # Recap
 
-+ **[Why we do that]** The proposed interactive PPCA model allows the user to control the visualization
-    - in order to create an explainable one (for *communicating the analytical result*)
-    - explore the visualization (kind of *"what-if" analysis*)
+Propose the interactive PPCA model allowing the user to control the visualization
+
++ **[Why we do that]**  
+    - for *communicating the analytical result*: e.g., create an explainable visualization
+    - for exploring the visualizations (kind of *"what-if" analysis*)
 
 + **[Technique]** The user's feedbacks can be efficiently integrated into a probabilistic model via the prior distribution of the latent variable.
 
