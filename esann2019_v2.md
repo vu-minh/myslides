@@ -249,23 +249,65 @@ where $\mathbf{\theta}$ represents all model's parameters.
 ]
 ]
 
+---
+# Evaluation of the iPPCA model
+*The work flow:*
++ First, show the initial visualization of the (original) PPCA model
++ Then the user selects and moves some anchor points
++ Finally, reconstruct the iPPCA model, re-run inference to create a new visualization.
+    - The uncertainty of the feedbacks ($\sigma_{fix}$) is small
+    - The hyper parameters of the optimization process are chosen to be the best
+
+*How to evaluate:*
++ We do not show the quantitative measures (e.g the quality metrics)
++ We show how to explain the new visualization instead
+    - The level for which we can understand / explain the visualization is considered as a qualitative measure
 
 ---
-# Quickdraw dataset (90 images)
+## Quickdraw dataset
 
 .center.width-100[![](figures/esann2019/quickdraw_eg.png)]
-.caption[90 images of Quickdraw dataset]
+.caption[90 sample images from Quickdraw dataset]
+
++ Move 6 different points of different groups
++ The global structure of the embedding is preserved
 
 ---
-## Fashion dataset (100 images)
+## Fashion dataset
 
 .center.width-90[![](figures/esann2019/FASHION100_ippca_compare.png)]
-.push-1-2.width-40[&nbsp;&nbsp;&nbsp;![](figures/esann2019/annote_iPPCA_FASHION.svg)]
+.caption[100 sample images from Fashion dataset]
+
++ Moves 6 points towards the coordinate axes
++ The goal of this interaction is to re-define the axes in the visualization
 
 ---
-## Automobile dataset (203 data points)
+## Fashion dataset
 
-.center.width-100[![](figures/esann2019/automobile_eg.png)]
+.grid[
+.kol-1-2[.width-100[![](figures/esann2019/FASHION100_ippca_result.png)]]
+.kol-1-2[.width-100[![](figures/esann2019/annote_iPPCA_FASHION.svg)]
+]]
+
+*How to explain the new axes?*
++ The horizontal axis represents **shape**
++ The vertical axis represents **color density**
+
+
+---
+## Automobile dataset
+.center.width-80[![](figures/esann2019/automobile_eg.png)]
+.caption[203 data points of the Automobile dataset]
+.grid[
+.kol-2-5[
+*How to explain the new axes?*
++ Horizontal axis: cars' **size**
++ Vertical axis: cars' **power**
+]
+.kol-3-5[
+.width-60[![](figures/esann2019/annote_iPPCA_automobile.svg)]
+]
+]
 
 
 ---
