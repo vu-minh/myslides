@@ -68,7 +68,7 @@ The result of the interactive model is explainable to the users.
 class: smaller
 # Existing approaches
 
-*Integrating **user's feedbacks** into existing DR methods*
+*Integrating user's feedbacks into existing Dimensionality Reduction (DR) methods*
 
 + Weighted MDS with the some fixed points to modify the weights $\omega\_{F}$:
 .larger[
@@ -78,7 +78,7 @@ $$
 $$
 ]
 
-+ Semi-supervised PCA with ensemble of Must-links (ML) and Cannot-links (CL):
++ Semi-supervised PCA with sets of Must-links (ML) and Cannot-links (CL):
 $$
 J(\mathbf{W}) = \frac{1}{2 n^2} \sum\_{i,j} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 + \frac{\alpha}{2 n\_{CL}} \sum\_{CL} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 - \frac{\beta}{2 n\_{ML}} \sum\_{ML}{ | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2
 $$
@@ -98,7 +98,7 @@ count: false
 class: smaller
 # Existing approaches
 
-*Integrating **user's feedbacks** into existing DR methods*
+*Integrating user's feedbacks into existing Dimensionality Reduction (DR) methods*
 
 + Weighted MDS with the some fixed points to modify the weights $\omega\_{F}$:
 .larger[
@@ -108,7 +108,7 @@ $$
 $$
 ]
 
-+ Semi-supervised PCA with ensemble of Must-links (ML) and Cannot-links (CL):
++ Semi-supervised PCA with sets of Must-links (ML) and Cannot-links (CL):
 $$
 J(\mathbf{W}) = \color{blue}{\frac{1}{2 n^2} \sum\_{i,j} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2} + \color{red}{\frac{\alpha}{2 n\_{CL}} \sum\_{CL} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 - \frac{\beta}{2 n\_{ML}} \sum\_{ML}{ | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2}
 $$
@@ -129,64 +129,42 @@ count: false
 *Integrating **user's feedbacks** into existing DR methods*
 
 + User's feedbacks $\Longrightarrow$ **Explicit regularization term**
-+ Jointly optimized with the <span style="color:blue">Objective function</span> of the basic DR method.
++ Jointly optimized with the <span style="color:blue">Objective function</span> of the basic DR methods.
 
 *Problems?*
 + Many discrete methods
-+ Design the regularization term explicitly
++ Manually design the regularization term explicitly
 
-*$\Longrightarrow$ Need another approach*
+*$\Longrightarrow$ Can we find another approach?*
 
 ---
+
 # Probabilistic approach
 
 .center.width-100[![](figures/esann2019/box_model_revise.png)]
 
 .footnote[David Blei, et al. "Variational Inference: Foundations and Modern Methods". NIPS 2016 Tutorial]
 
-
 ---
-count: true
 
-# Existing approaches
+# Proposed Interactive PPCA model
 
-Integrating **user's feedbacks** into existing DR methods as a **regularization term**
-
----
-count: true
-
-# Existing approaches and ours
-
-Integrating **user's feedbacks** into $\underbrace{\footnotesize{ \text{existing DR methods} }}_{\Downarrow}$ ~~as a **regularization term**~~
-
-.center[$\text{ \small{a probabilistic dimensionality reduction model} }$]
-
----
-count: true
-
-# Existing approaches and ours
-
-Integrating **user's feedbacks** into $\underbrace{\footnotesize{ \text{existing DR methods} }}_{\Downarrow}$ ~~as a **regularization term**~~
-
-.center[$\text{ \small{a probabilistic dimensionality reduction model} }$]
-
-+ Probabilistic PCA (PPCA) as a simple basic model to work with
-
++ PCA method under probabilistic view point
++ Modeling by full Bayesian PCA model
 + **User's feedbacks** $\Large \approx$ <span style="color:purple">prior knowledge</span> to (re)construct the model.
 
 .center.width-80[![](figures/esann2019/FASHION100_ippca_compare.png)]
 
 ---
 
-count: true
-
-.center.width-80[![](figures/esann2019/box_model_apply.png)]
 
 The user-indicated position of selected points is modelled directly
 
 in the <span style="color:purple">prior distribution</span> of the PPCA model.
 
+
 ---
+
 # A closer look at the PPCA model
 
 ## A generative view of the probabilistic PCA model.
@@ -198,6 +176,7 @@ in the <span style="color:purple">prior distribution</span> of the PPCA model.
 .footnote[Bishop's PRML Figure. 12.9]
 
 ---
+
 # Proposed interactive PPCA model
 
 + $\mathbf{X} = \\{ \mathbf{x}_n \\}$: observed dataset of N data points of D-dimensions.
@@ -322,9 +301,9 @@ $$
 .caption[Embedding of 1797 digits with PCA (on the left) and with modified PPCA (on the right)]
 
 + The decoder $f(\mathbf{z})$ of PPCA is a simple neural network with one hidden layer of 50 units and a sigmoid activation function.
-+ The inference is done by the pyro's built-in SVI optimizer.
++ The inference is done by the Pyro's built-in SVI optimizer.
 
-.footnote[pyro, Deep Universal Probabilistic Programming, http://pyro.ai/]
+.footnote[Pyro, Deep Universal Probabilistic Programming, http://pyro.ai/]
 
 ---
 # Recap
