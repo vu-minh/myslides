@@ -4,7 +4,7 @@ body {
     font-family:  'Lato', 'Avenir Next', 'Avenir', 'Trebuchet MS', 'Segoe UI', sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     color: #354046; /*#455a64;*/
     line-height: 1.4;
-    font-size: 11pt;
+    font-size: 13pt;
     word-wrap: break-word;
 }
 
@@ -53,7 +53,7 @@ body {
 
 .remark-slide-content h1 {
     font-weight: bold;
-    font-size: 2.25em;
+    font-size: 1.8em;
     margin: 0 0 .5em 0;
     color: #17525d;
 }
@@ -66,7 +66,7 @@ body {
 }
 
 .remark-slide-content h3 {
-    font-size: 1.0em;
+    font-size: 1.3em;
     font-weight: normal;
     margin: 0 0 .5em 0;
 }
@@ -109,7 +109,7 @@ strong {
 }
 
 ul > li, ol > li {
-     margin: 0.6em 0;
+     margin: 0.6em 0 0 0;
 }
 
 ul > li > ul > li {

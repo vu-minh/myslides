@@ -38,7 +38,7 @@ Having an initial visualization with the Probabilistic Principle Component Analy
 ## Proposed Method: Interactive PPCA (iPPCA)
 
 .center.width-60[![](figures/esann2019/FASHION100_selected_points.png)]
-The user wants to manipulate the visualization by moving some points.
+The user can manipulate the visualization by moving some points.
 
 
 ---
@@ -52,7 +52,6 @@ The result of the interactive model is explainable to the users.
 ---
 
 # Motivation
-
 *User interaction in model design and analysis*
 
 .center.width-100[![](figures/esann2019/ml_with_human.png)]
@@ -66,22 +65,12 @@ The result of the interactive model is explainable to the users.
 
 
 ---
-count: true
+class: smaller
 # Existing approaches
 
 *Integrating **user's feedbacks** into existing DR methods*
 
-|Constrained DR methods| Constrained objective functions|
-|---|---|
-|Weighted MDS| .width-60[![](figures/esann2019/reg_term_eg1.png)] |
-|Semi-supervised PCA|  .width-60[![](figures/esann2019/reg_term_eg2.png)] |
-|Constrained Locality Preserving Projections|  .width-60[![](figures/esann2019/reg_term_eg2.png)] |
-
-+ User's feedbacks $\Longrightarrow$ **Regularization term**
-+ Jointly optimized with the <span style="color:blue">Objective function</span> of the basic DR method.
----
-
-+ Weighted MDS:
++ Weighted MDS with the some fixed points to modify the weights $\omega\_{F}$:
 .larger[
 $$
 \mathbf{Y} = \text{argmin}\_{\mathbf{Y}}
@@ -89,89 +78,72 @@ $$
 $$
 ]
 
-+ Semi-supervised PCA with ensemble of **Must-links (ML)** and **Cannot-links (CL)**:
++ Semi-supervised PCA with ensemble of Must-links (ML) and Cannot-links (CL):
 $$
 J(\mathbf{W}) = \frac{1}{2 n^2} \sum\_{i,j} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 + \frac{\alpha}{2 n\_{CL}} \sum\_{CL} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 - \frac{\beta}{2 n\_{ML}} \sum\_{ML}{ | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2
 $$
 
-+ Constrained Locality Preserving Projections with **ML** and **CL**:
++ Constrained Locality Preserving Projections with ML and CL:
 $$
 \mathbf{W}  = \text{argmin}\_{\mathbf{W}} \frac{1}{2} \Big( \sum\_{i,j}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 \widetilde{M}\_{ij} + \sum\_{ML'}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2  - \sum\_{CL'}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 
 \Big)
 $$
 
-    - $\mathbf{y}\_{j} = \mathbf{W}^T {\mathbf{x}}\_{j}$
-    - $\mathbf{W}$ is projection matrix, $\mathbf{M}$ is weights matrix
-    - ML, CL are ensemble of Must-links and Cannot-links
-    - ML', CL' are the extended set of constraints
-
----
-count: true
-
-# Motivation
-
-*User interaction in model design and analysis*
-+ Probabilistic model pipeline
-
-.center.width-80[![](figures/esann2019/box_model.png)]
-
-.footnote[David Blei, et al. "Variational Inference: Foundations and Modern Methods." NIPS 2016 Tutorial]
-
----
-count: true
-
-# Motivation
-
-*User interaction in model design and analysis*
-+ Probabilistic model pipeline with revising
-
-.center.width-80[![](figures/esann2019/box_model_revise.png)]
-
-.footnote[David Blei, et al. "Variational Inference: Foundations and Modern Methods". NIPS 2016 Tutorial]
+    - $\mathbf{y}\_{j} = \mathbf{W}^T {\mathbf{x}}\_{j}$, $\mathbf{W}$ is projection matrix, $\mathbf{M}$ is weights matrix
+    - ML', CL' are the extended set of Must-links and Cannot-links constraints
 
 
 ---
-count: true
-
-# Motivation
-
-*User interaction in model design and analysis*
-+ Visual analytic with Human-in-the-loop
-+ Probabilistic model pipeline with revising
-
-
----
-count: true
+count: false
+class: smaller
 # Existing approaches
 
 *Integrating **user's feedbacks** into existing DR methods*
 
-.grid[
-.kol-1-2[
-.center.width-100[![](figures/esann2019/reg_term_eg1.png)]
-.center.width-100[![](figures/esann2019/reg_term_eg2.png)]
-]
-.kol-1-2[
-.center.width-100[![](figures/esann2019/reg_term_eg3.png)]
-]
++ Weighted MDS with the some fixed points to modify the weights $\omega\_{F}$:
+.larger[
+$$
+\mathbf{Y} = \text{argmin}\_{\mathbf{Y}}
+\color{blue}{\sum\_{i < j \leq n} \rho 	 \Big| d\_{\omega}(i,j) - d\_{Y}(i,j) \Big|} + \color{red}{(1-\rho) \Big | d\_{\omega\_{F}}(i,j) - d\_{Y}(i,j) \Big |}
+$$
 ]
 
-+ User's feedbacks $\Longrightarrow$ **Regularization term**
++ Semi-supervised PCA with ensemble of Must-links (ML) and Cannot-links (CL):
+$$
+J(\mathbf{W}) = \color{blue}{\frac{1}{2 n^2} \sum\_{i,j} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2} + \color{red}{\frac{\alpha}{2 n\_{CL}} \sum\_{CL} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 - \frac{\beta}{2 n\_{ML}} \sum\_{ML}{ | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2}
+$$
+
++ Constrained Locality Preserving Projections with ML and CL:
+$$
+\mathbf{W}  = \text{argmin}\_{\mathbf{W}} \frac{1}{2} \Big( \color{blue}{\sum\_{i,j}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 \widetilde{M}\_{ij}} + \color{red}{\sum\_{ML'}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2  - \sum\_{CL'}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2}
+\Big)
+$$
+
+    - $\mathbf{y}\_{j} = \mathbf{W}^T {\mathbf{x}}\_{j}$, $\mathbf{W}$ is projection matrix, $\mathbf{M}$ is weights matrix
+    - ML', CL' are the extended set of Must-links and Cannot-links constraints
+
+---
+count: false
+# Existing approaches
+
+*Integrating **user's feedbacks** into existing DR methods*
+
++ User's feedbacks $\Longrightarrow$ **Explicit regularization term**
 + Jointly optimized with the <span style="color:blue">Objective function</span> of the basic DR method.
 
-???
+*Problems?*
++ Many discrete methods
++ Design the regularization term explicitly
 
-+ others':
-    - constraints = regularization term
-    - many constraint types, many optim -> many reg. term 
+*$\Longrightarrow$ Need another approach*
 
-+ ours':
-    - constraint in prob. model
-    - test with PPCA
-    - see later, can extend it, without changing the optim
+---
+# Probabilistic approach
 
-+ repeat:
-    - with this approach, what we can obtain (model-based ML advantages)
+.center.width-100[![](figures/esann2019/box_model_revise.png)]
+
+.footnote[David Blei, et al. "Variational Inference: Foundations and Modern Methods". NIPS 2016 Tutorial]
+
 
 ---
 count: true
@@ -267,18 +239,19 @@ where $\mathbf{\theta}$ represents all model's parameters.
 ---
 # Evaluation of the iPPCA model
 *The workflow:*
-+ First, show the initial visualization of the (original) PPCA model
-+ Then the user selects and moves some anchor points
-+ Finally, reconstruct the iPPCA model, re-run inference to create a new visualization.
++ Show the initial visualization of the (original) PPCA model
++ The user selects and moves some anchor points
++ Reconstruct the iPPCA model to create a new visualization.
     - The uncertainty of the feedbacks ($\sigma_{fix}$) is small
-    - The hyper parameters of the optimization process are chosen to be the best
+    - Hyper parameters of the optimization process are chosen to be the best
 
 *How to evaluate:*
-+ We do not show the quantitative measures (e.g the quality metrics)
-+ We show how to explain the new visualization instead
++ Show how to explain the new visualization
     - The level for which we can understand / explain the visualization is considered as a qualitative measure
 
+
 ---
+
 ## Quickdraw dataset
 
 .center.width-100[![](figures/esann2019/quickdraw_eg.png)]
@@ -314,32 +287,30 @@ where $\mathbf{\theta}$ represents all model's parameters.
 .center.width-80[![](figures/esann2019/automobile_eg.png)]
 .caption[203 data points of the Automobile dataset]
 .grid[
-.kol-2-5[
+.kol-1-2[
 *How to explain the new axes?*
 + Horizontal axis: cars' **size**
 + Vertical axis: cars' **power**
 ]
-.kol-3-5[
-.width-60[![](figures/esann2019/annote_iPPCA_automobile.svg)]
+.kol-1-2[
+.width-70[![](figures/esann2019/annote_iPPCA_automobile.svg)]
 ]
 ]
 
 
 ---
-# Advantage of the Probabilistic Approach
+# Advantage of Probabilistic Approach
 
 *Combination of solid theoretical models and modern powerful inference toolboxes*
 + Take any old-class model or modern generative model
-+ Plug into a modern probability framework (Stan, PyMC3, Pyro, Tensorflow Probability)
++ Plug into a probability framework (Stan, PyMC3, Pyro, Tensorflow Probability) which support modern inference methods like *Stochastic Variational Inference (SVI)*
 
-*Can easily extend the classic models*
-+ Extend the general generative process:
+*Can easily extend the classic models* (Extend the general generative process)
 $$
 \mathbf{x}_n \mid \mathbf{z}_n \sim \mathcal{N}(f(\mathbf{z}_n), \sigma^{2} \mathbf{I})
 $$
-    - in PPCA model, $f(\mathbf{z}_n) = \mathbf{W} \mathbf{z}_n$
-    - but $f(\mathbf{z}_n)$ can be any high-capacity representation function (a neural net)
-+ Take advantages of the modern inference methods, e.g., *Stochastic Variational Inference (SVI)*
++ in PPCA model, $f(\mathbf{z}_n) = \mathbf{W} \mathbf{z}_n$
++ $f(\mathbf{z}_n)$ can be any high-capacity representation function (a neural net)
 
 
 ---
@@ -360,15 +331,15 @@ $$
 
 Propose the interactive PPCA model allowing the user to control the visualization
 
-+ **[Why we do that]**  
-    - for *communicating the analytical result*: e.g., create an explainable visualization
-    - for exploring the visualizations (kind of *"what-if" analysis*)
++ **[Why]**  
+    - *communicate the analytical result*: e.g., create an explainable visualization
+    - explore the visualizations (*"what-if" analysis*)
 
-+ **[Technique]** The user's feedbacks can be efficiently integrated into a probabilistic model via the prior distribution of the latent variable.
++ **[How]** The user's feedbacks can be efficiently integrated into a probabilistic model via prior distributions of latent variables.
 
-+ **[Potential]** The probabilistic model is flexible to extend and can be easily optimized by the blackbox inference methods.
++ **[Potential]** The probabilistic model is flexible to extend and can be easily optimized by the black-box inference methods.
 
-+ **[Future work]** We can thus focus on the problem of *modeling the user's feedback* without worrying about the complex optimization procedure.
++ **[Future work]** Focus on the *user's feedback modeling* problem without worrying about the complex optimization procedure.
 
 ---
 class: middle, center, 
