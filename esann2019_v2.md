@@ -153,7 +153,7 @@ count: false
 
 .center.width-90[![](figures/esann2019/Bishop_Figure12.9.png)]
 
-.footnote[[1]Bishop, Christopher M. "Bayesian pca." Advances in neural information processing systems. 1999.<br>[2]Bishop's PRML book, Figure 12.9]
+.footnote[[1] Bishop, Christopher M. "Bayesian pca." Advances in neural information processing systems. 1999.<br>[2] Bishop's PRML book, Figure 12.9]
 
 ---
 
@@ -270,7 +270,7 @@ in the <span style="color:purple">prior distribution</span> of the PPCA model.
 + Take any old-class model or modern generative model
 + Plug into a probability framework $^{[1]}$  which support modern inference methods like *Stochastic Variational Inference (SVI)*
 
-*Can easily extend the generative process
+*Can easily extend the generative process*
 $$
 \mathbf{x}_n \mid \mathbf{z}_n \sim \mathcal{N}(f(\mathbf{z}_n), \sigma^{2} \mathbf{I})
 $$
