@@ -93,14 +93,17 @@ $$
 $$
 J(\mathbf{W}) = \frac{1}{2 n^2} \sum\_{i,j} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 + \frac{\alpha}{2 n\_{CL}} \sum\_{CL} { | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2 - \frac{\beta}{2 n\_{ML}} \sum\_{ML}{ | \mathbf{x}\_{i} - \mathbf{y}\_{j} | }^2
 $$
-where $\mathbf{y}\_{j} = \mathbf{W}^T {\mathbf{x}}\_{j}$
 
++ Constrained Locality Preserving Projections with **ML** and **CL**:
 $$
-\mathbf{W}  = argmin\_{\mathbf{W}} \frac{1}{2} \Big( \sum\_{i,j}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 {W}_{ij} 
- + \sum\_{ML'}(\mathbf{y}\_{i}
- - \mathbf{y}\_{j})^2  - \sum\_{CL'}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 
+\mathbf{W}  = \text{argmin}\_{\mathbf{W}} \frac{1}{2} \Big( \sum\_{i,j}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 \widetilde{M}\_{ij} + \sum\_{ML'}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2  - \sum\_{CL'}(\mathbf{y}\_{i} - \mathbf{y}\_{j})^2 
 \Big)
 $$
+
+    - $\mathbf{y}\_{j} = \mathbf{W}^T {\mathbf{x}}\_{j}$
+    - $\mathbf{W}$ is projection matrix, $\mathbf{M}$ is weights matrix
+    - ML, CL are ensemble of Must-links and Cannot-links
+    - ML', CL' are the extended set of constraints
 
 ---
 count: true
